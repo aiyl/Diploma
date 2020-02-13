@@ -11,7 +11,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 bPath = r"D:\Program Files\Blender Foundation\Blender\blender.exe"
 blend = os.path.join(path, "scene.blend")
 bscript = os.path.join(path, "scene.py")
-render = os.path.join(path, "output_#")
+render = os.path.join(path, "result_#")
 
 try:
 	subprocess.run([bPath, "-b", blend, "--python", bscript, "-o", render, "-f", "1"])

@@ -49,8 +49,8 @@ def compare(imgAnsPath, imgOutPath):
 		exit(ERR_OK)
 
 
-
-imgOut = sys.argv[2] # path to image
-imgAns = sys.argv[3]
-
+#argv[0]-назвние скрипта check.py примеру
+#argv[1]-input (03.in) входной файл
+imgOut = sys.argv[2] # path to image эталон
+imgAns = sys.argv[3] #решение участника
 compare(imgAns, imgOut)
