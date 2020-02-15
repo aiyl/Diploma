@@ -23,14 +23,32 @@ with open(os.path.join(root, fin), "r") as f:
     bpy.ops.render.render(write_still=True)
     #nexttt
     obj = bpy.data.objects[3]
-    qua = len(obj.data.vertices)
-    i=0
-    while i<qua:
-        print(bpy.data.scenes[0].objects[3].data.vertices[i].co.x)
-        i+=1
-    print(qua)
-    #if "solve2" in bpy.data.meshes:
-     #   mesh = bpy.data.meshes["solve2"]
-       # print(len(mesh.data.vertices))
-#bpy.data.scenes[0].objects['solve2'].data.vertices[15].co.x
+    quaVer = len(obj.data.vertices)
+    quaFaces = len(obj.data.polygons)
+    quaEdges = len(obj.data.edges)
+    i = 0
+    check = 0
+   #все вершины и их координаты
+   # while i<quaVer:
+        #print(bpy.data.scenes[0].objects[3].data.vertices[i].co.x)
+        #i+=1
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    if bpy.ops.object.mode_set.poll():
+        bpy.ops.object.mode_set(mode='EDIT')
+        print("in edit mode ")
+    else:
+        print('poll failed')
+    #bpy.ops.mesh.print3d_clean_non_manifold()
+    while i < quaFaces:
+        if len(obj.data.polygons[i].vertices) == 3 or 4:
+            check += 1
+        i += 1
+    if check == quaFaces:
+        print("geometry is OK")
+    else:
+        print('wrong geometry')
+    print('vertexes ', quaVer)
+    print('faces ', quaFaces)
+    print('edges ', quaEdges)
 
