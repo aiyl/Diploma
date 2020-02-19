@@ -36,9 +36,17 @@ with open(os.path.join(root, fin), "r") as f:
     bpy.context.view_layer.objects.active = obj
     if bpy.ops.object.mode_set.poll():
         bpy.ops.object.mode_set(mode='EDIT')
-        print("in edit mode ")
+        bpy.ops.mesh.select_mode(type='VERT')
+        bpy.ops.mesh.select_non_manifold()
+
+        #selectedVerts = [v for v in bpy.context.active_object.data.vertices if v.select]
+        #for v in selectedVerts:
+         #   print(v.co)
+
+        print("in edit mode and selected none manifold ")
     else:
         print('poll failed')
+    #bpy.ops.mesh.select_non_manifold()
     #bpy.ops.mesh.print3d_clean_non_manifold()
     while i < quaFaces:
         if len(obj.data.polygons[i].vertices) == 3 or 4:
@@ -48,7 +56,8 @@ with open(os.path.join(root, fin), "r") as f:
         print("geometry is OK")
     else:
         print('wrong geometry')
-    print('vertexes ', quaVer)
+    #определенное колво моделей на сцене, проверка нормали, начличие материалла, свойства матер, uv развертку (у каждого полигона текстура) развертка не менее 80%
+    print('vertices ', quaVer)
     print('faces ', quaFaces)
     print('edges ', quaEdges)
 
