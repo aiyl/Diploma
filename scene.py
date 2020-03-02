@@ -22,10 +22,13 @@ with open(os.path.join(root, fin), "r") as f:
     scene.render.filepath = fout
     bpy.ops.render.render(write_still=True)
     #nexttt
+    #
     obj = bpy.data.objects[3]
     quaVer = len(obj.data.vertices)
     quaFaces = len(obj.data.polygons)
     quaEdges = len(obj.data.edges)
+    n = len(bpy.data.objects) - 3
+    print('количество объектов на сцене', n)
     i = 0
     check = 0
    #все вершины и их координаты
@@ -37,11 +40,13 @@ with open(os.path.join(root, fin), "r") as f:
     if bpy.ops.object.mode_set.poll():
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.mesh.select_mode(type='VERT')
-        bpy.ops.mesh.select_non_manifold()
 
-        #selectedVerts = [v for v in bpy.context.active_object.data.vertices if v.select]
-        #for v in selectedVerts:
-         #   print(v.co)
+
+        bpy.ops.mesh.select_all(action='DESELECT')
+        bpy.ops.mesh.select_non_manifold()
+        while i<quaVer:
+            print(obj.data.vertices[i].select)
+            i += 1
 
         print("in edit mode and selected none manifold ")
     else:
@@ -55,9 +60,8 @@ with open(os.path.join(root, fin), "r") as f:
     if check == quaFaces:
         print("geometry is OK")
     else:
-        print('wrong geometry')
-    #определенное колво моделей на сцене, проверка нормали, начличие материалла, свойства матер, uv развертку (у каждого полигона текстура) развертка не менее 80%
+        print('wrong geometry') 
+    #определенное колво моделей на сцене, проверка нормали, начличие материалла, свойства матер ??? mtl файл, uv развертку (у каждого полигона текстура) развертка не менее 80%, сделай прозрачный рендер
     print('vertices ', quaVer)
     print('faces ', quaFaces)
     print('edges ', quaEdges)
-
