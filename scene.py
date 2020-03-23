@@ -24,31 +24,39 @@ with open(os.path.join(root, fin), "r") as f:
     #nexttt
     #
     obj = bpy.data.objects[3]
+    mesh = bpy.data.meshes[0]
     quaVer = len(obj.data.vertices)
     quaFaces = len(obj.data.polygons)
     quaEdges = len(obj.data.edges)
     n = len(bpy.data.objects) - 3
     print('количество объектов на сцене', n)
     i = 0
+    k = 0
     check = 0
    #все вершины и их координаты
    # while i<quaVer:
         #print(bpy.data.scenes[0].objects[3].data.vertices[i].co.x)
         #i+=1
+
     obj.select_set(True)
     bpy.context.view_layer.objects.active = obj
     if bpy.ops.object.mode_set.poll():
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.mesh.select_mode(type='VERT')
-
-
         bpy.ops.mesh.select_all(action='DESELECT')
         bpy.ops.mesh.select_non_manifold()
-        while i<quaVer:
-            print(obj.data.vertices[i].select)
-            i += 1
+        bpy.ops.object.editmode_toggle()
+        #print([vertex.select for vertex in bpy.context.selected_objects[0].data.vertices])
 
-        print("in edit mode and selected none manifold ")
+        while i<quaVer:
+            if obj.data.vertices[i].select == True:
+                #print('Non manifold loops:  ', obj.data.vertices[i].co)
+                k+=1
+
+            #print(obj.data.vertices[i].select)
+            i += 1
+       # print("in edit mode and selected none manifold ")
+        print('non manifold vertex quantity: ', k)
     else:
         print('poll failed')
     #bpy.ops.mesh.select_non_manifold()
@@ -60,8 +68,21 @@ with open(os.path.join(root, fin), "r") as f:
     if check == quaFaces:
         print("geometry is OK")
     else:
-        print('wrong geometry') 
-    #определенное колво моделей на сцене, проверка нормали, начличие материалла, свойства матер ??? mtl файл, uv развертку (у каждого полигона текстура) развертка не менее 80%, сделай прозрачный рендер
+        print('wrong geometry')
+
+
+    #определенное колво моделей на сцене, проверка нормали,                    начличие материалла, свойства матер ??? mtl файл, uv развертку (у каждого полигона текстура) развертка не менее 80%, сделай прозрачный рендер, полигоны не перескаются в uv развертке
     print('vertices ', quaVer)
     print('faces ', quaFaces)
     print('edges ', quaEdges)
+    print(bpy.context.object.active_material)
+    # bpy.data.objects[3].active_material только материаллы выбранных объектов
+
+
+
+# bpy.context.edit_object - на данный момент выбранный в edit mode object
+   #bpy.context.active_object - активный
+    #bpy.context.scene.tool_settings.uv_select_mode = 'FACE'
+    #bpy.ops.sculpt.uv_sculpt_stroke() ?????
+
+
