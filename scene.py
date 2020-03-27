@@ -78,6 +78,18 @@ with open(os.path.join(root, fin), "r") as f:
     print(bpy.context.object.active_material)
     # bpy.data.objects[3].active_material только материаллы выбранных объектов
 
+    # UV
+    me = bpy.context.object.data
+    uv_layer = me.uv_layers.active.data
+
+    for poly in me.polygons:
+        print("Polygon index: %d, length: %d" % (poly.index, poly.loop_total))
+
+        # range is used here to show how the polygons reference loops,
+        # for convenience 'poly.loop_indices' can be used instead.
+        for loop_index in range(poly.loop_start, poly.loop_start + poly.loop_total):
+            print("    Vertex: %d" % me.loops[loop_index].vertex_index)
+            print("    UV: %r" % uv_layer[loop_index].uv)
 
 
 # bpy.context.edit_object - на данный момент выбранный в edit mode object
