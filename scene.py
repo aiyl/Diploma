@@ -98,3 +98,5 @@ with open(os.path.join(root, fin), "r") as f:
     #bpy.ops.sculpt.uv_sculpt_stroke() ?????
 
 
+
+# v- вектора, vt - текстура vn - нормали vp -  параметры вершин в пространстве
