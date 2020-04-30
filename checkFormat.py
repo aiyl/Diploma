@@ -1,13 +1,17 @@
 import re
-handle = open("solve2.obj", "r")
 fileIsObj = False
-while True:
-    data = handle.read(512)
-    c = data.find("vt")
-    if c != -1:
-        fileIsObj = True
-        break
-    if not data:
-        break
-handle.close()
-print(fileIsObj)
+try:
+    handle = open("solve2.obj", "r")
+    while True:
+        data = handle.read(512)
+        c = data.find("vt")
+        if c != -1:
+            fileIsObj = True
+            break
+        if not data:
+            break
+except Exception:
+    fileIsObj = False
+finally:
+    handle.close()
+    print(fileIsObj)

@@ -19,6 +19,7 @@ with open(os.path.join(root, fin), "r") as f:
     cam.rotation_euler = Euler((rx, ry, rz), 'XYZ')
     scene = bpy.context.scene
     scene.camera = cam
+    bpy.context.scene.render.film_transparent = True
     scene.render.filepath = fout
     bpy.ops.render.render(write_still=True)
     #nexttt
