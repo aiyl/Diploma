@@ -2,7 +2,6 @@ import skimage
 from skimage import io, color
 mtl1= 'isba1.mtl'
 mtl2= 'isbaForBlend.mtl'
-errWeight = 5
 def getDiffuseColor (path):
     f = open(path)
     line = f.readline()
@@ -39,7 +38,7 @@ def findMinDiff (list1, list2) :
         print(min)
         errors += round(float(min))
 
-    points = round(((maxPoint - errors*errWeight) * 100)/maxPoint)
+    points = round(((maxPoint - errors) * 100)/maxPoint)
     print('Errors', errors, 'Points ', points, 'Max Point', maxPoint)
 findMinDiff(getDiffuseColor(mtl1), getDiffuseColor(mtl2))
 print('участник ',getDiffuseColor(mtl1), '\n', 'эталон ',  getDiffuseColor(mtl2))
