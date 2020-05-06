@@ -4,7 +4,7 @@ import bmesh
 from mathutils import Euler, Vector
 
 root = os.path.dirname(bpy.data.filepath)
-solve_obj = bpy.ops.import_scene.obj(filepath=os.path.join(root, 'solve2.obj'))
+solve_obj = bpy.ops.import_scene.obj(filepath=os.path.join(root, 'check1.obj'))
 textPath = filepath=os.path.join(root, 'text.txt')
 fin = os.path.join(root, '03.in')
 fout = os.path.join(root, 'output.png')
@@ -24,7 +24,7 @@ with open(os.path.join(root, fin), "r") as f:
     bpy.ops.render.render(write_still=True)
     #nexttt
     #
-    obj = bpy.data.objects[3]
+    obj = bpy.data.objects[1]
     mesh = bpy.data.meshes[0]
     quaVer = len(obj.data.vertices)
     quaFaces = len(obj.data.polygons)
@@ -101,3 +101,4 @@ with open(os.path.join(root, fin), "r") as f:
 
 
 # v- вектора, vt - текстура vn - нормали vp -  параметры вершин в пространстве
+# bpy.ops.uv.export_layout(filepath="", export_all=False, modified=False, mode='PNG', size=(1024, 1024), opacity=0.25) export UV to file

@@ -42,5 +42,3 @@ def findMinDiff (list1, list2) :
     print('Errors', errors, 'Points ', points, 'Max Point', maxPoint)
 findMinDiff(getDiffuseColor(mtl1), getDiffuseColor(mtl2))
 print('участник ',getDiffuseColor(mtl1), '\n', 'эталон ',  getDiffuseColor(mtl2))
-
-#a[0.1.2]=[h=0.5, s= ,v=0.05]
