@@ -4,12 +4,12 @@ import bmesh
 from mathutils import Euler, Vector
 
 root = os.path.dirname(bpy.data.filepath)
-solve_obj = bpy.ops.import_scene.obj(filepath=os.path.join(root, 'check1.obj'))
+solve_obj = bpy.ops.import_scene.obj(filepath=os.path.join(root, 'solve2.obj'))
 textPath = filepath=os.path.join(root, 'text.txt')
 fin = os.path.join(root, '03.in')
 fout = os.path.join(root, 'output.png')
 f = open(textPath, 'w')
-f.write('kokc')
+#f.write('kokc')
 f.close()
 with open(os.path.join(root, fin), "r") as f:
     tx, ty, tz = tuple([ float(x) for x in f.readline().split() ])
@@ -56,7 +56,6 @@ with open(os.path.join(root, fin), "r") as f:
 
             #print(obj.data.vertices[i].select)
             i += 1
-       # print("in edit mode and selected none manifold ")
         print('non manifold vertex quantity: ', k)
     else:
         print('poll failed')
@@ -85,13 +84,33 @@ with open(os.path.join(root, fin), "r") as f:
 
     for poly in me.polygons:
         print("Polygon index: %d, length: %d" % (poly.index, poly.loop_total))
-
-        # range is used here to show how the polygons reference loops,
-        # for convenience 'poly.loop_indices' can be used instead.
         for loop_index in range(poly.loop_start, poly.loop_start + poly.loop_total):
             print("    Vertex: %d" % me.loops[loop_index].vertex_index)
             print("    UV: %r" % uv_layer[loop_index].uv)
+    #normalsss
 
+    bpy.ops.object.editmode_toggle()
+
+    if bpy.ops.object.mode_set.poll():
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_mode(type='FACE')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bm = bmesh.from_edit_mesh(bpy.context.object.data)
+
+    # Reference selected face indices
+    bm.faces.ensure_lookup_table()
+    selFaces = [f.index for f in bm.faces if f.select]
+    # Calculate the average normal vector
+    avgNormal = Vector()
+    for i in selFaces:
+        avgNormal += bm.faces[i].normal
+        avgNormal = avgNormal / len(selFaces)
+    # Calculate the dot products between the average an each face normal
+    dots = [avgNormal.dot(bm.faces[i].normal) for i in selFaces]
+
+    # Reversed faces have a negative dot product value
+    reversedFaces = [i for i, dot in zip(selFaces, dots) if dot < 0]
+    print('Reversed id', reversedFaces)
 
 # bpy.context.edit_object - на данный момент выбранный в edit mode object
    #bpy.context.active_object - активный
